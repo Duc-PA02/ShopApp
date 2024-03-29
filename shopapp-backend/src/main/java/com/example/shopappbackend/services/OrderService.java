@@ -9,12 +9,14 @@ import com.example.shopappbackend.repositories.OrderRepository;
 import com.example.shopappbackend.repositories.UserRepository;
 import com.example.shopappbackend.responses.order.OrderResponse;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class OrderService implements IOrderService{
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     @Override
-    public OrderResponse createOrder(OrderDTO orderDTO) throws Exception {
+    public Order createOrder(OrderDTO orderDTO) throws Exception {
         User user = userRepository.findById(orderDTO.getUserId()).orElseThrow(() -> new DataNotFoundException("Cannot found user with id = " + orderDTO.getUserId()));
         //convert OrderDTO => Order
         //dùng thư viện ModelMapper
@@ -34,35 +36,48 @@ public class OrderService implements IOrderService{
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(OrderStatus.PENDING);
         //kiểm tra shipping date phải >= ngày hôm nay
-        LocalDate shippingDate = orderDTO.getShippingDate() == null
-                ? LocalDate.now() : orderDTO.getShippingDate();
+        LocalDate shippingDate = orderDTO.getShippingDate() == null ? LocalDate.now() : orderDTO.getShippingDate();
         if (shippingDate.isBefore(LocalDate.now())){
             throw new DataNotFoundException("Date must be at least today");
         }
         order.setShippingDate(shippingDate);
         order.setActive(true);
         orderRepository.save(order);
-        modelMapper.typeMap(Order.class, OrderResponse.class);
-        return modelMapper.map(order, OrderResponse.class);
+        return order;
     }
 
     @Override
-    public OrderResponse updateOrder(int id, OrderDTO orderDTO) {
-        return null;
+    public Order updateOrder(int id, OrderDTO orderDTO) throws Exception {
+        Order order = orderRepository.findById(id).orElse(null);
+        if (order == null){
+            throw new DataNotFoundException("Cannot find order with id = " + id);
+        }
+        User user = userRepository.findById(orderDTO.getUserId()).orElse(null);
+        if (user == null){
+            throw new DataNotFoundException("Cannot find user with id = " + orderDTO.getUserId());
+        }
+        modelMapper.typeMap(OrderDTO.class, Order.class).addMappings(mapper -> mapper.skip(Order::setId));
+        modelMapper.map(orderDTO, order);
+        order.setUser(user);
+        return orderRepository.save(order);
     }
 
     @Override
     public void deleteOrder(int id) {
-
+        Order order = orderRepository.findById(id).orElse(null);
+        if (order != null){
+            order.setActive(false);
+            orderRepository.save(order);
+        }
     }
 
     @Override
-    public OrderResponse getOrderById(int id) {
-        return null;
+    public Order getOrder(int id) {
+        return orderRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<OrderResponse> getAllOrders(int userId) {
-        return null;
+    public List<Order> findByUserId(int userId) {
+        return orderRepository.findByUserId(userId);
     }
 }

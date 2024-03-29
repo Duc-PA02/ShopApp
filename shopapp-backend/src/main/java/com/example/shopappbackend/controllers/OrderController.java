@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,8 +26,44 @@ public class OrderController {
                 List<String> errorMessages = result.getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
-            OrderResponse orderResponse = orderService.createOrder(orderDTO);
-            return ResponseEntity.ok().body(orderResponse);
+            Order order = orderService.createOrder(orderDTO);
+            return ResponseEntity.ok().body(order);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity<?> getOrdersByUser(@Valid @PathVariable("user_id") int userId){
+        try {
+            List<Order> orders = orderService.findByUserId(userId);
+            return ResponseEntity.ok().body(orders);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrder(@Valid @PathVariable("id") int orderId){
+        try {
+            Order existingOrder = orderService.getOrder(orderId);
+            return ResponseEntity.ok().body(existingOrder);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateOrder(@Valid @PathVariable("id") int id, @Valid @RequestBody OrderDTO orderDTO){
+        try {
+            Order order = orderService.updateOrder(id, orderDTO);
+            return ResponseEntity.ok().body(order);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteOrder(@Valid @PathVariable("id") int id){
+        try {
+            orderService.deleteOrder(id);
+            return ResponseEntity.ok().body("delete successfully order with id = " + id);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

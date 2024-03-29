@@ -9,9 +9,9 @@ import com.example.shopappbackend.responses.order.OrderResponse;
 import java.util.List;
 
 public interface IOrderService {
-    OrderResponse createOrder(OrderDTO orderDTO) throws Exception;
-    OrderResponse updateOrder(int id, OrderDTO orderDTO);
+    Order createOrder(OrderDTO orderDTO) throws Exception;
+    Order updateOrder(int id, OrderDTO orderDTO) throws Exception;
     void deleteOrder(int id);
-    OrderResponse getOrderById(int id);
-    List<OrderResponse> getAllOrders(int userId);
+    Order getOrder(int id);
+    List<Order> findByUserId(int userId);
 }
