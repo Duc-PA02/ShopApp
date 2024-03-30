@@ -22,7 +22,7 @@ import java.util.List;
 public class UserController {
     private final IUserService userService;
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
+    public ResponseEntity<?> register(@Valid @RequestBody UserDTO userDTO,
                                         BindingResult result){
         try {
             if (result.hasErrors()) {
@@ -40,6 +40,11 @@ public class UserController {
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserLoginDTO userLoginDTO){
-        return ResponseEntity.ok("some token");
+        try {
+            String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
+            return ResponseEntity.ok().body(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
