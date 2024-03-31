@@ -3,6 +3,7 @@ package com.example.shopappbackend.services;
 import com.example.shopappbackend.components.JwtTokenUtil;
 import com.example.shopappbackend.dtos.UserDTO;
 import com.example.shopappbackend.exceptions.DataNotFoundException;
+import com.example.shopappbackend.exceptions.PermissionDenyException;
 import com.example.shopappbackend.models.Role;
 import com.example.shopappbackend.models.User;
 import com.example.shopappbackend.repositories.RoleRepository;
@@ -27,10 +28,17 @@ public class UserService implements IUserService{
     private final AuthenticationManager authenticationManager;
     @Override
     //register User
-    public User createUser(UserDTO userDTO) throws DataNotFoundException {
+    public User createUser(UserDTO userDTO) throws Exception {
         String phoneNumber = userDTO.getPhoneNumber();
         if (userRepository.existsByPhoneNumber(phoneNumber)){
             throw new DataIntegrityViolationException("Phone number already exists");
+        }
+        Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
+        if (role == null){
+            throw new DataNotFoundException("Role not found");
+        }
+        if(role.getName().toUpperCase().equals(Role.ADMIN)) {
+            throw new PermissionDenyException("not register account ADMIN");
         }
         User newUser = User.builder()
                 .fullName(userDTO.getFullName())
@@ -40,11 +48,10 @@ public class UserService implements IUserService{
                 .dateOfBirth(userDTO.getDateOfBirth())
                 .facebookAccountId(userDTO.getFacebookAccountId())
                 .googleAccountId(userDTO.getGoogleAccountId())
+                .active(true)
                 .build();
-        Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
-        if (role == null){
-            throw new DataNotFoundException("Role not found");
-        }
+
+        newUser.setRole(role);
         if (userDTO.getFacebookAccountId() == 0 && userDTO.getGoogleAccountId() == 0){
             String password = userDTO.getPassword();
             String encodedPassword = passwordEncoder.encode(password);
@@ -66,7 +73,8 @@ public class UserService implements IUserService{
             }
         }
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                phoneNumber, password
+                phoneNumber, password,
+                existingUser.getAuthorities()
         );
         authenticationManager.authenticate(authenticationToken);
         return jwtTokenUtil.generateToken(existingUser);
