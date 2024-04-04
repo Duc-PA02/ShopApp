@@ -2,21 +2,28 @@ package com.example.shopappbackend.controllers;
 
 import com.example.shopappbackend.dtos.CategoryDTO;
 import com.example.shopappbackend.models.Category;
+import com.example.shopappbackend.responses.Category.UpdateCategoryResponse;
 import com.example.shopappbackend.services.ICategoryService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("${api.prefix}/categories")
 @RequiredArgsConstructor
 public class CategoryController {
     private final ICategoryService categoryService;
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
     @PostMapping("")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO, BindingResult result) {
         if (result.hasErrors()) {
@@ -42,10 +49,13 @@ public class CategoryController {
 
     //update category by id
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateCategory(@PathVariable int id,@Valid @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<UpdateCategoryResponse> updateCategory(@PathVariable int id, @Valid @RequestBody CategoryDTO categoryDTO, HttpServletRequest request) {
 
         Category updatedCategory = categoryService.updateCategory(id,categoryDTO);
-        return ResponseEntity.ok("category is updated: " + updatedCategory);
+        Locale locale = localeResolver.resolveLocale(request);
+        return ResponseEntity.ok(UpdateCategoryResponse.builder()
+                        .message(messageSource.getMessage("category.update_category.update_successfully", null, locale))
+                .build());
     }
 
     //delete category
