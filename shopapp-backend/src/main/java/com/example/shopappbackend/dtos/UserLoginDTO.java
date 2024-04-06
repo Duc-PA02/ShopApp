@@ -21,5 +21,5 @@ public class UserLoginDTO {
 
     @Min(value = 1, message = "You must enter role's Id")
     @JsonProperty("role_id")
-    private int roleId;
+    private Integer roleId;
 }

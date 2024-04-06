@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class ProductService implements IProductService{
     private final CategoryRepository categoryRepository;
     private final ProductImageRepository productImageRepository;
     @Override
+    @Transactional
     public Product createProduct(ProductDTO productDTO) throws DataNotFoundException {
         Category category = categoryRepository.findById(productDTO.getCategoryId())
                 .orElseThrow(() ->
@@ -41,6 +43,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    @Transactional
     public Product updateProduct(int id, ProductDTO productDTO) throws Exception{
         Product existingProduct = getProductById(id);
         if (existingProduct != null){
@@ -58,6 +61,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    @Transactional
     public void deleteProduct(int id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()){
@@ -66,15 +70,20 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Product getProductById(int id) throws Exception {
-        return productRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Cannot find product with id = " + id));
+    public Product getProductById(int productId) throws Exception {
+        Optional<Product> optionalProduct = productRepository.getDetailProduct(productId);
+        if(optionalProduct.isPresent()) {
+            return optionalProduct.get();
+        }
+        throw new DataNotFoundException("Cannot find product with id =" + productId);
     }
 
     @Override
-    public Page<ProductResponse> getAllProduct(PageRequest pageRequest) {
-        return productRepository
-                .findAll(pageRequest)
-                .map(ProductResponse::fromProduct);
+    public Page<ProductResponse> getAllProduct(String keyword, int categoryId, PageRequest pageRequest) {
+        // Lấy danh sách sản phẩm theo trang (page), giới hạn (limit), và categoryId (nếu có)
+        Page<Product> productsPage;
+        productsPage = productRepository.searchProducts(keyword, categoryId, pageRequest);
+        return productsPage.map(ProductResponse::fromProduct);
     }
 
     @Override
@@ -82,6 +91,7 @@ public class ProductService implements IProductService{
         return productRepository.existsByName(name);
     }
     @Override
+    @Transactional
     public ProductImage createProductImage(int productId, ProductImageDTO productImageDTO) throws Exception {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() ->
@@ -92,8 +102,8 @@ public class ProductService implements IProductService{
                 .build();
         //Ko cho thêm quá 5 ảnh 1 sp
         int size = productImageRepository.findByProductId(productId).size();
-        if (size >= 5){
-            throw new InvalidParamException("Number up image must be <= 5");
+        if (size >= ProductImage.MAXIMUM_IMAGES_PER_PRODUCT){
+            throw new InvalidParamException("Number up image must be <= 5" + ProductImage.MAXIMUM_IMAGES_PER_PRODUCT);
         }
         return productImageRepository.save(newProductImage);
     }

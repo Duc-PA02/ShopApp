@@ -15,7 +15,7 @@ public interface IProductService {
     Product updateProduct(int id, ProductDTO productDTO) throws Exception;
     void deleteProduct(int id);
     Product getProductById(int id) throws Exception;
-    Page<ProductResponse> getAllProduct(PageRequest pageRequest);
+    Page<ProductResponse> getAllProduct(String keyword, int categoryId, PageRequest pageRequest);
     boolean existByName(String name);
     public ProductImage createProductImage(int productId, ProductImageDTO productImageDTO) throws Exception;
 }

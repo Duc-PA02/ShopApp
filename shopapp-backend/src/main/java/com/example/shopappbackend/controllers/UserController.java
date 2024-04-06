@@ -66,7 +66,7 @@ public class UserController {
                     .build());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(LoginResponse.builder()
-                            .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_FAILED))
+                            .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_FAILED, e.getMessage()))
                     .build());
         }
     }
