@@ -31,7 +31,7 @@ public class Order {
     @Column(length = 100)
     private String note;
     @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
     private String status;
     @Column(name = "total_money")
     private Float totalMoney;

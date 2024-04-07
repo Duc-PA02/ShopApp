@@ -34,8 +34,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("${api.prefix}/products")
@@ -200,5 +202,20 @@ public class ProductController {
             }
         }
         return ResponseEntity.ok("Fake products created successfully");
+    }
+
+    @GetMapping("/by-ids")
+    public ResponseEntity<?> getProductsByIds(@RequestParam("ids") String ids) {
+        //eg: 1,3,5,7
+        try {
+            // Tách chuỗi ids thành một mảng các số nguyên
+            List<Integer> productIds = Arrays.stream(ids.split(","))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+            List<Product> products = productService.findProductsByIds(productIds);
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
