@@ -13,8 +13,8 @@
             [(ngModel)]="keyword">
         <select class="form-control product-category"             
             [(ngModel)]="selectedCategoryId">
-            <option [value]="0">Tất cả</option> 
-            <option *ngFor="let category of categories" [value]="category.id">
+            <option class="category-search" [value]="0">Tất cả</option> 
+            <option class="category-search" *ngFor="let category of categories" [value]="category.id">
                 {{ category.name }}
             </option>
         </select>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { OrderDTO } from 'src/app/dtos/order/order.dto';
 import { environment } from 'src/app/environments/environment';
 import { Product } from 'src/app/models/product';
@@ -12,7 +13,7 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent {
+export class OrderComponent implements OnInit{
   orderForm: FormGroup;
   cartItems: { product: Product, quantity: number }[] = [];
   couponCode: string = ''; // Mã giảm giá
@@ -37,6 +38,7 @@ export class OrderComponent {
     private productService: ProductService,
     private orderService: OrderService,
     private formBuilder: FormBuilder,
+    private router: Router
   ) {
     // Tạo FormGroup và các FormControl tương ứng
     this.orderForm = this.formBuilder.group({
@@ -56,7 +58,9 @@ export class OrderComponent {
     debugger
     const cart = this.cartService.getCart();
     const productIds = Array.from(cart.keys()); // Chuyển danh sách ID từ Map giỏ hàng    
-
+    if(productIds.length === 0) {
+      return;
+    }  
     // Gọi service để lấy thông tin sản phẩm dựa trên danh sách ID
     debugger
     this.productService.getProductsByIds(productIds).subscribe({
@@ -107,10 +111,14 @@ export class OrderComponent {
         product_id: cartItem.product.id,
         quantity: cartItem.quantity
       }));
+      this.orderData.total_money =  this.totalAmount;
+      // Dữ liệu hợp lệ, bạn có thể gửi đơn hàng đi
       this.orderService.placeOrder(this.orderData).subscribe({
         next: (response) => {            
           debugger                
-          console.log('Đặt hàng thành công');
+          alert('Đặt hàng thành công');
+          this.cartService.clearCart();
+          this.router.navigate(['/']);
         },
         complete: () => {
           debugger;
@@ -118,7 +126,7 @@ export class OrderComponent {
         },
         error: (error: any) => {
           debugger;
-          console.error('Lỗi khi đặt hàng:', error);
+          alert(`Lỗi khi đặt hàng: ${error}`);
         }
       });  
     } else {

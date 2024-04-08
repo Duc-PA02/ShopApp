@@ -18,6 +18,9 @@ import {
   HttpClientModule, 
   HTTP_INTERCEPTORS 
 } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { UserProfileComponent } from './components/user-profile/user.profile.component';
 
 
 @NgModule({
@@ -30,7 +33,8 @@ import {
     OrderDetailComponent, 
     LoginComponent, 
     RegisterComponent, 
-    AppComponent
+    AppComponent,
+    UserProfileComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -38,6 +42,8 @@ import {
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    NgbModule,
+    CommonModule
   ],
   providers: [
     {

@@ -6,6 +6,7 @@ import { LoginDTO } from '../dtos/user/login.dto';
 import { environment } from '../environments/environment';
 import { HttpUtilService } from './http.ultis.service';
 import { UserResponse } from '../responses/user/user.response';
+import { UpdateUserDTO } from '../dtos/user/update.user.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,16 @@ export class UserService {
       })
     })
   }
+  updateUserDetail(token: string, updateUserDTO: UpdateUserDTO) {
+    debugger
+    let userResponse = this.getUserResponseFromLocalStorage();        
+    return this.http.put(`${this.apiUserDetail}/${userResponse?.id}`,updateUserDTO,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    })
+  }
   saveUserResponseToLocalStorage(userResponse?: UserResponse) {
     try {
       debugger
@@ -50,7 +61,7 @@ export class UserService {
       console.error('Error saving user response to local storage:', error);
     }
   }
-  getUserResponseFromLocalStorage() {
+  getUserResponseFromLocalStorage():UserResponse | null {
     try {
       // Retrieve the JSON string from local storage using the key
       const userResponseJSON = localStorage.getItem('user'); 
@@ -64,6 +75,16 @@ export class UserService {
     } catch (error) {
       console.error('Error retrieving user response from local storage:', error);
       return null; // Return null or handle the error as needed
+    }
+  }
+  removeUserFromLocalStorage():void {
+    try {
+      // Remove the user data from local storage using the key
+      localStorage.removeItem('user');
+      console.log('User data removed from local storage.');
+    } catch (error) {
+      console.error('Error removing user data from local storage:', error);
+      // Handle the error as needed
     }
   }
 }
