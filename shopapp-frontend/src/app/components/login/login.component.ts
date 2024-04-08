@@ -3,10 +3,11 @@ import { LoginDTO } from '../../dtos/user/login.dto';
 import { UserService } from '../../services/user.service';
 import { TokenService } from '../../services/token.service';
 import { RoleService } from '../../services/role.service'; // Import RoleService
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoginResponse } from '../../responses/user/login.response';
 import { Role } from '../../models/role'; // Đường dẫn đến model Role
+import { UserResponse } from 'src/app/responses/user/user.response';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit{
   roles: Role[] = []; // Mảng roles
   rememberMe: boolean = true;
   selectedRole: Role | undefined; // Biến để lưu giá trị được chọn từ dropdown
+  userResponse?: UserResponse
 
   onPhoneNumberChange() {
     console.log(`Phone typed: ${this.phoneNumber}`);
@@ -29,6 +31,7 @@ export class LoginComponent implements OnInit{
   }
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private tokenService: TokenService,
     private roleService: RoleService
@@ -53,7 +56,7 @@ export class LoginComponent implements OnInit{
   login() {
     const message = `phone: ${this.phoneNumber}` +
       `password: ${this.password}`;
-    //alert(message);
+    // alert(message);
     debugger
 
     const loginDTO: LoginDTO = {
@@ -67,9 +70,36 @@ export class LoginComponent implements OnInit{
         const { token } = response;
         if (this.rememberMe) {
           this.tokenService.setToken(token);
+          this.userService.getUserDetail(token).subscribe({
+            next: (response: any) => {
+              debugger
+              // this.userResponse = {
+              //   id: response.id,
+              //   fullname: response.fullname,
+              //   address: response.address,
+              //   is_active: response.is_active,
+              //   date_of_birth: new Date(response.date_of_birth),
+              //   facebook_account_id: response.facebook_account_id,
+              //   google_account_id: response.google_account_id,
+              //   role: response.role
+              // }
+              this.userResponse = {
+                ...response,
+                date_of_birth: new Date(response.date_of_birth),
+              };    
+              this.userService.saveUserResponseToLocalStorage(this.userResponse); 
+              this.router.navigate(['/']);  
+              alert(response.message)                
+            },
+            complete: () => {
+              debugger
+            },
+            error: (error: any) => {
+              debugger
+              alert(error.error.message)
+            }
+          })
         }
-        alert(response.message)                
-        //this.router.navigate(['/login']);
       },
       complete: () => {
         debugger;

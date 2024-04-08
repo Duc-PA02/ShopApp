@@ -29,7 +29,7 @@ export class DetailProductComponent implements OnInit {
     }
     ngOnInit() {
       // Lấy productId từ URL      
-      const idParam = 5;
+      const idParam = 10;
       debugger
       //this.cartService.clearCart();
       //const idParam = 9 //fake tạm 1 giá trị

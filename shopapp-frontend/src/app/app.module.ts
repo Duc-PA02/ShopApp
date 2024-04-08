@@ -3,45 +3,57 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { OrderComponent } from './components/order/order.component';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
+import { OrderComponent } from './components/order/order.component';
+import { OrderDetailComponent } from './components/detail-order/order.detail.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { OrderConfirmComponent } from './components/order-confirm/order-confirm.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './interceptors/token.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
+import {TokenInterceptor} from './interceptors/token.interceptor';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app/app.component';
+
+import { 
+  HttpClientModule, 
+  HTTP_INTERCEPTORS 
+} from '@angular/common/http';
+
 
 @NgModule({
   declarations: [    
     HomeComponent, 
-    HeaderComponent, 
+    HeaderComponent,
     FooterComponent, 
+    DetailProductComponent, 
     OrderComponent, 
-    DetailProductComponent,
+    OrderDetailComponent, 
     LoginComponent, 
     RegisterComponent, 
-    OrderConfirmComponent
+    AppComponent
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true,
-    }
+    },
   ],
   bootstrap: [
-    // HomeComponent
-    DetailProductComponent
-    // OrderComponent
-    // LoginComponent
+    AppComponent
+    // HomeComponent,
+    //DetailProductComponent,
+    // OrderComponent,
+    //OrderDetailComponent,
+    //LoginComponent,
     // RegisterComponent
-    // OrderConfirmComponent
   ]
 })
 export class AppModule { }
