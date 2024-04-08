@@ -2,7 +2,6 @@ package com.example.shopappbackend.controllers;
 
 import com.example.shopappbackend.dtos.OrderDTO;
 import com.example.shopappbackend.models.Order;
-import com.example.shopappbackend.models.Product;
 import com.example.shopappbackend.responses.order.OrderResponse;
 import com.example.shopappbackend.services.IOrderService;
 import jakarta.validation.Valid;
@@ -45,7 +44,7 @@ public class OrderController {
     public ResponseEntity<?> getOrder(@Valid @PathVariable("id") int orderId){
         try {
             Order existingOrder = orderService.getOrder(orderId);
-            return ResponseEntity.ok().body(existingOrder);
+            return ResponseEntity.ok().body(OrderResponse.fromOrder(existingOrder));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

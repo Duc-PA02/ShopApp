@@ -17,6 +17,7 @@ public class OrderDetail {
     private int id;
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private Order order;
 
     @ManyToOne
@@ -34,4 +35,6 @@ public class OrderDetail {
 
     @Column(name = "color")
     private String color;
+
+
 }
