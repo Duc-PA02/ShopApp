@@ -9,6 +9,8 @@ import { OrderComponent } from './components/order/order.component';
 import { OrderDetailComponent } from './components/detail-order/order.detail.component';
 import { AuthGuardFn } from './guards/auth.guard';
 import { UserProfileComponent } from './components/user-profile/user.profile.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminGuardFn } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +20,7 @@ const routes: Routes = [
   { path: 'orders', component: OrderComponent, canActivate:[AuthGuardFn]},
   { path: 'user-profile', component: UserProfileComponent, canActivate:[AuthGuardFn] },
   { path: 'orders/:id', component: OrderDetailComponent },
+  { path: 'admin', component: AdminComponent, canActivate:[AdminGuardFn] }, 
 ];
 
 @NgModule({

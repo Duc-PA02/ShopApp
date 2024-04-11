@@ -21,6 +21,7 @@ import {
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { UserProfileComponent } from './components/user-profile/user.profile.component';
+import { AdminModule } from './components/admin/admin.module';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { UserProfileComponent } from './components/user-profile/user.profile.com
     LoginComponent, 
     RegisterComponent, 
     AppComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -43,7 +44,8 @@ import { UserProfileComponent } from './components/user-profile/user.profile.com
     HttpClientModule,
     AppRoutingModule,
     NgbModule,
-    CommonModule
+    CommonModule,
+    AdminModule
   ],
   providers: [
     {
