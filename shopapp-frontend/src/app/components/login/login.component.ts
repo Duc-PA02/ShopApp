@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { LoginResponse } from '../../responses/user/login.response';
 import { Role } from '../../models/role'; // Đường dẫn đến model Role
 import { UserResponse } from 'src/app/responses/user/user.response';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit{
 
   phoneNumber: string = '';
   password: string = '';
+  showPassword: boolean = false;
 
   roles: Role[] = []; // Mảng roles
   rememberMe: boolean = true;
@@ -27,36 +29,44 @@ export class LoginComponent implements OnInit{
 
   onPhoneNumberChange() {
     console.log(`Phone typed: ${this.phoneNumber}`);
-    //how to validate ? phone must be at least 10 characters
+    //how to validate ? phone must be at least 6 characters
   }
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private tokenService: TokenService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private cartService: CartService
   ) { }
 
   ngOnInit() {
     // Gọi API lấy danh sách roles và lưu vào biến roles
     debugger
-    this.roleService.getRoles().subscribe({
+    this.roleService.getRoles().subscribe({      
       next: (roles: Role[]) => { // Sử dụng kiểu Role[]
         debugger
         this.roles = roles;
         this.selectedRole = roles.length > 0 ? roles[0] : undefined;
       },
+      complete: () => {
+        debugger
+      },  
       error: (error: any) => {
         debugger
         console.error('Error getting roles:', error);
       }
     });
   }
-
+  createAccount() {
+    debugger
+    // Chuyển hướng người dùng đến trang đăng ký (hoặc trang tạo tài khoản)
+    this.router.navigate(['/register']); 
+  }
   login() {
     const message = `phone: ${this.phoneNumber}` +
       `password: ${this.password}`;
-    // alert(message);
+    //alert(message);
     debugger
 
     const loginDTO: LoginDTO = {
@@ -68,41 +78,34 @@ export class LoginComponent implements OnInit{
       next: (response: LoginResponse) => {
         debugger;
         const { token } = response;
-        if (this.rememberMe) {
+        if (this.rememberMe) {          
           this.tokenService.setToken(token);
+          debugger;
           this.userService.getUserDetail(token).subscribe({
             next: (response: any) => {
               debugger
-              // this.userResponse = {
-              //   id: response.id,
-              //   fullname: response.fullname,
-              //   address: response.address,
-              //   is_active: response.is_active,
-              //   date_of_birth: new Date(response.date_of_birth),
-              //   facebook_account_id: response.facebook_account_id,
-              //   google_account_id: response.google_account_id,
-              //   role: response.role
-              // }
               this.userResponse = {
                 ...response,
                 date_of_birth: new Date(response.date_of_birth),
               };    
               this.userService.saveUserResponseToLocalStorage(this.userResponse); 
-              if(this.userResponse?.role.name =='admin'){
-                this.router.navigate(['/admin']);   
-              }else if(this.userResponse?.role.name == 'user'){
-                this.router.navigate(['/']);    
+              if(this.userResponse?.role.name == 'admin') {
+                this.router.navigate(['/admin']);    
+              } else if(this.userResponse?.role.name == 'user') {
+                this.router.navigate(['/']);                      
               }
+              
             },
             complete: () => {
-              debugger
+              this.cartService.refreshCart();
+              debugger;
             },
             error: (error: any) => {
-              debugger
-              alert(error.error.message)
+              debugger;
+              alert(error.error.message);
             }
           })
-        }
+        }                        
       },
       complete: () => {
         debugger;
@@ -112,5 +115,8 @@ export class LoginComponent implements OnInit{
         alert(error.error.message);
       }
     });
+  }
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 }

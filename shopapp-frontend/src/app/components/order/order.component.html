@@ -6,7 +6,7 @@
     </div> 
     <form [formGroup]="orderForm"> <!-- Thêm form và gán formGroup -->   
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <h2 class="product-header">Thông tin người nhận</h2>
                 <div class="mb-3">
                     <label for="fullname" class="form-label">Họ và tên</label>
@@ -87,33 +87,38 @@
                 </div>
             <!-- </form> -->
         </div>        
-        <div class="col-md-6">
+        <div class="col-md-7">
             <h2 class="product-order">Sản phẩm đã đặt hàng</h2>
             <table>
-            <thead>
-                <tr>
-                    <th scope="col" class="text-start">Sản phẩm</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Đơn giá</th>
-                    <th scope="col">Tổng giá</th>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let item of cartItems">
-                    <tr>
+                <tbody>
+                    <ng-container *ngFor="let item of cartItems; let i = index">
+                      <tr>
                         <td>
-                            <div class="product-info">
-                                <img [src]="item.product.thumbnail" alt="Product Image" class="product-image">
-                                <span class="product-name">{{ item.product.name }}</span>
-                            </div>
+                          <div class="product-info">
+                            <img [src]="item.product.thumbnail" alt="Product Image" class="product-image">
+                            <span class="product-name">{{ item.product.name }}</span>
+                          </div>
                         </td>
-                        <td>{{ item.quantity }}</td>
+                        <td>
+                          <div class="product-quantity">
+                            <div class="border-wrapper">
+                              <button (click)="decreaseQuantity(i)">-</button>
+                              {{ item.quantity }}
+                              <button (click)="increaseQuantity(i)">+</button>
+                            </div>
+                          </div>
+                        </td>
                         <td>{{ item.product.price | number:'1.2-2' }}</td>
                         <td>{{ (item.product.price * item.quantity) | number:'1.2-2' }}</td>
-
-                    </tr>
-                </ng-container>
-            </tbody>
+                        <td>
+                          <button class="btn btn-danger" (click)="confirmDelete(i)">
+                            Xóa
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+              
         </table>   
             <div class="text-start mt-3">
                 <h4 class="header-text text-end ">Tổng giá: {{ totalAmount | number:'1.2-2'}}</h4>
