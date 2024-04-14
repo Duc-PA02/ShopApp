@@ -27,11 +27,14 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@Valid @RequestBody OrderDTO orderDTO, BindingResult result){
         try {
             if (result.hasErrors()) {
-                List<String> errorMessages = result.getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();
+                List<String> errorMessages = result.getFieldErrors()
+                        .stream()
+                        .map(FieldError::getDefaultMessage)
+                        .toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
-            Order order = orderService.createOrder(orderDTO);
-            return ResponseEntity.ok().body(order);
+            Order orderResponse = orderService.createOrder(orderDTO);
+            return ResponseEntity.ok().body(orderResponse);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

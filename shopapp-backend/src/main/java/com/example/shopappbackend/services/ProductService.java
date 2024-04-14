@@ -80,7 +80,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Page<ProductResponse> getAllProduct(String keyword, int categoryId, PageRequest pageRequest) {
+    public Page<ProductResponse> getAllProducts(String keyword, Integer categoryId, PageRequest pageRequest) {
         // Lấy danh sách sản phẩm theo trang (page), giới hạn (limit), và categoryId (nếu có)
         Page<Product> productsPage;
         productsPage = productRepository.searchProducts(keyword, categoryId, pageRequest);
