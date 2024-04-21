@@ -1,4 +1,4 @@
-package com.example.shopappbackend.services;
+package com.example.shopappbackend.services.user;
 
 import com.example.shopappbackend.dtos.UpdateUserDTO;
 import com.example.shopappbackend.dtos.UserDTO;
@@ -9,5 +9,7 @@ public interface IUserService {
     User createUser(UserDTO userDTO) throws Exception;
     String login(String phoneNumber, String password, Integer roleId) throws Exception;
     User getUserDetailsFromToken(String token) throws Exception;
+    User getUserDetailsFromRefreshToken(String refreshToken) throws Exception;
     User updateUser(Integer userId, UpdateUserDTO updatedUserDTO) throws Exception;
+
 }

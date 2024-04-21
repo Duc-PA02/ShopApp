@@ -1,4 +1,4 @@
-package com.example.shopappbackend.services;
+package com.example.shopappbackend.services.user;
 
 import com.example.shopappbackend.components.JwtTokenUtils;
 import com.example.shopappbackend.components.LocalizationUtils;
@@ -7,8 +7,10 @@ import com.example.shopappbackend.dtos.UserDTO;
 import com.example.shopappbackend.exceptions.DataNotFoundException;
 import com.example.shopappbackend.exceptions.PermissionDenyException;
 import com.example.shopappbackend.models.Role;
+import com.example.shopappbackend.models.Token;
 import com.example.shopappbackend.models.User;
 import com.example.shopappbackend.repositories.RoleRepository;
+import com.example.shopappbackend.repositories.TokenRepository;
 import com.example.shopappbackend.repositories.UserRepository;
 import com.example.shopappbackend.utils.MessageKeys;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +26,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements IUserService{
+public class UserService implements IUserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtils jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
     private final LocalizationUtils localizationUtils;
+    private final TokenRepository tokenRepository;
     @Override
     @Transactional
     //register User
@@ -157,5 +160,11 @@ public class UserService implements IUserService{
         } else {
             throw new Exception("User not found");
         }
+    }
+
+    @Override
+    public User getUserDetailsFromRefreshToken(String refreshToken) throws Exception {
+        Token existingToken = tokenRepository.findByRefreshToken(refreshToken);
+        return getUserDetailsFromToken(existingToken.getToken());
     }
 }

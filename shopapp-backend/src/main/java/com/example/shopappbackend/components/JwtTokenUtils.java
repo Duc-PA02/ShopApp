@@ -1,7 +1,9 @@
 package com.example.shopappbackend.components;
 
 import com.example.shopappbackend.exceptions.InvalidParamException;
+import com.example.shopappbackend.models.Token;
 import com.example.shopappbackend.models.User;
+import com.example.shopappbackend.repositories.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,7 +32,7 @@ public class JwtTokenUtils {
     private int expirationRefreshToken;
     @Value("${jwt.secretKey}")
     private String secretKey;
-
+    private final TokenRepository tokenRepository;
     public String generateToken(User user) throws Exception{
         Map<String, Object> claims = new HashMap<>();
 //        this.generateSecretKey();
@@ -73,8 +75,15 @@ public class JwtTokenUtils {
     public String extractPhoneNumber(String token) {
         return extractClaim(token, Claims::getSubject);
     }
-    public boolean validateToken(String token, UserDetails userDetails){
+    public boolean validateToken(String token, User userDetails){
         String phoneNumber = extractPhoneNumber(token);
-        return (phoneNumber.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        Token existingToken = tokenRepository.findByToken(token);
+        if(existingToken == null || existingToken.isRevoked() == true ||
+                !userDetails.isActive()
+        ) {
+            return false;
+        }
+        return (phoneNumber.equals(userDetails.getUsername()))
+                && !isTokenExpired(token);
     }
 }

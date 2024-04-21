@@ -1,15 +1,20 @@
 package com.example.shopappbackend.controllers;
 
+import com.example.shopappbackend.dtos.RefreshTokenDTO;
 import com.example.shopappbackend.dtos.UpdateUserDTO;
 import com.example.shopappbackend.dtos.UserDTO;
 import com.example.shopappbackend.dtos.UserLoginDTO;
+import com.example.shopappbackend.models.Token;
 import com.example.shopappbackend.models.User;
+import com.example.shopappbackend.responses.ResponseObject;
 import com.example.shopappbackend.responses.User.LoginResponse;
 import com.example.shopappbackend.responses.User.RegisterResponse;
 import com.example.shopappbackend.responses.User.UserResponse;
-import com.example.shopappbackend.services.IUserService;
+import com.example.shopappbackend.services.user.IUserService;
 import com.example.shopappbackend.components.LocalizationUtils;
+import com.example.shopappbackend.services.token.ITokenService;
 import com.example.shopappbackend.utils.MessageKeys;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +31,7 @@ import java.util.List;
 public class UserController {
     private final IUserService userService;
     private final LocalizationUtils localizationUtils;
+    private final ITokenService tokenService;
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody UserDTO userDTO, BindingResult result){
         RegisterResponse registerResponse = new RegisterResponse();
@@ -56,23 +62,29 @@ public class UserController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody UserLoginDTO userLoginDTO){
-        try {
+    public ResponseEntity<ResponseObject> login(@Valid @RequestBody UserLoginDTO userLoginDTO, HttpServletRequest request) throws Exception {
             String token = userService.login(
                     userLoginDTO.getPhoneNumber(),
                     userLoginDTO.getPassword(),
                     userLoginDTO.getRoleId() == null ? 1 : userLoginDTO.getRoleId()
             );
-
-            return ResponseEntity.ok().body(LoginResponse.builder()
-                            .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_SUCCESSFULLY))
-                            .token(token)
-                    .build());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(LoginResponse.builder()
-                            .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_FAILED, e.getMessage()))
-                    .build());
-        }
+            String userAgent = request.getHeader("User-Agent");
+            User userDetail =userService.getUserDetailsFromToken(token);
+            Token jwtToken = tokenService.addToken(userDetail, token, isMobileDevice(userAgent));
+        LoginResponse loginResponse = LoginResponse.builder()
+                .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_SUCCESSFULLY))
+                .token(jwtToken.getToken())
+                .tokenType(jwtToken.getTokenType())
+                .refreshToken(jwtToken.getRefreshToken())
+                .username(userDetail.getUsername())
+                .roles(userDetail.getAuthorities().stream().map(item -> item.getAuthority()).toList())
+                .id(userDetail.getId())
+                .build();
+        return ResponseEntity.ok().body(ResponseObject.builder()
+                .message("Login successfully")
+                .data(loginResponse)
+                .status(HttpStatus.OK)
+                .build());
     }
     @PostMapping("/details")
     public ResponseEntity<UserResponse> getUserDetails(
@@ -104,5 +116,31 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+    private boolean isMobileDevice(String userAgent) {
+        // Kiểm tra User-Agent header để xác định thiết bị di động
+        // Ví dụ đơn giản:
+        return userAgent.toLowerCase().contains("mobile");
+    }
+    @PostMapping("/refreshToken")
+    public ResponseEntity<ResponseObject> refreshToken(
+            @Valid @RequestBody RefreshTokenDTO refreshTokenDTO
+    ) throws Exception {
+        User userDetail = userService.getUserDetailsFromRefreshToken(refreshTokenDTO.getRefreshToken());
+        Token jwtToken = tokenService.refreshToken(refreshTokenDTO.getRefreshToken(), userDetail);
+        LoginResponse loginResponse = LoginResponse.builder()
+                .message("Refresh token successfully")
+                .token(jwtToken.getToken())
+                .tokenType(jwtToken.getTokenType())
+                .refreshToken(jwtToken.getRefreshToken())
+                .username(userDetail.getUsername())
+                .roles(userDetail.getAuthorities().stream().map(item -> item.getAuthority()).toList())
+                .id(userDetail.getId()).build();
+        return ResponseEntity.ok().body(
+                ResponseObject.builder()
+                        .data(loginResponse)
+                        .message(loginResponse.getMessage())
+                        .status(HttpStatus.OK)
+                        .build());
     }
 }
