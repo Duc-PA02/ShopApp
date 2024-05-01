@@ -5,6 +5,7 @@ import com.example.shopappbackend.components.LocalizationUtils;
 import com.example.shopappbackend.dtos.UpdateUserDTO;
 import com.example.shopappbackend.dtos.UserDTO;
 import com.example.shopappbackend.exceptions.DataNotFoundException;
+import com.example.shopappbackend.exceptions.InvalidPasswordException;
 import com.example.shopappbackend.exceptions.PermissionDenyException;
 import com.example.shopappbackend.models.Role;
 import com.example.shopappbackend.models.Token;
@@ -15,6 +16,8 @@ import com.example.shopappbackend.repositories.UserRepository;
 import com.example.shopappbackend.utils.MessageKeys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -145,6 +149,35 @@ public class UserService implements IUserService {
         //existingUser.setRole(updatedRole);
         // Save the updated user
         return userRepository.save(existingUser);
+    }
+
+    @Override
+    public Page<User> findAll(String keyword, Pageable pageable) throws Exception {
+        return userRepository.findAll(keyword, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(Integer userId, String newPassword) throws InvalidPasswordException, DataNotFoundException {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("User not found"));
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        existingUser.setPassword(encodedPassword);
+        userRepository.save(existingUser);
+        //reset password => clear token
+        List<Token> tokens = tokenRepository.findByUser(existingUser);
+        for (Token token : tokens) {
+            tokenRepository.delete(token);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void blockOrEnable(Integer userId, Boolean active) throws DataNotFoundException {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("User not found"));
+        existingUser.setActive(active);
+        userRepository.save(existingUser);
     }
 
     @Override
