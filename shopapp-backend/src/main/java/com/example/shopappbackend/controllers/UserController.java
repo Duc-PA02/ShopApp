@@ -103,67 +103,72 @@ public class UserController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<ResponseObject> login(@Valid @RequestBody UserLoginDTO userLoginDTO, HttpServletRequest request) throws Exception {
+    public ResponseEntity<LoginResponse> login(
+            @Valid @RequestBody UserLoginDTO userLoginDTO,
+            HttpServletRequest request
+    ) {
+        // Kiểm tra thông tin đăng nhập và sinh token
+        try {
             String token = userService.login(
                     userLoginDTO.getPhoneNumber(),
                     userLoginDTO.getPassword(),
                     userLoginDTO.getRoleId() == null ? 1 : userLoginDTO.getRoleId()
             );
             String userAgent = request.getHeader("User-Agent");
-            User userDetail =userService.getUserDetailsFromToken(token);
+            User userDetail = userService.getUserDetailsFromToken(token);
             Token jwtToken = tokenService.addToken(userDetail, token, isMobileDevice(userAgent));
-        LoginResponse loginResponse = LoginResponse.builder()
-                .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_SUCCESSFULLY))
-                .token(jwtToken.getToken())
-                .tokenType(jwtToken.getTokenType())
-                .refreshToken(jwtToken.getRefreshToken())
-                .username(userDetail.getUsername())
-                .roles(userDetail.getAuthorities().stream().map(item -> item.getAuthority()).toList())
-                .id(userDetail.getId())
-                .build();
-        return ResponseEntity.ok().body(ResponseObject.builder()
-                .message("Login successfully")
-                .data(loginResponse)
-                .status(HttpStatus.OK)
-                .build());
+
+            // Trả về token trong response
+            return ResponseEntity.ok(LoginResponse.builder()
+                    .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_SUCCESSFULLY))
+                    .token(jwtToken.getToken())
+                    .tokenType(jwtToken.getTokenType())
+                    .refreshToken(jwtToken.getRefreshToken())
+                    .username(userDetail.getUsername())
+                    .roles(userDetail.getAuthorities().stream().map(item -> item.getAuthority()).toList())
+                    .id(userDetail.getId())
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(
+                    LoginResponse.builder()
+                            .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_FAILED, e.getMessage()))
+                            .build()
+            );
+        }
     }
     @PostMapping("/details")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public ResponseEntity<ResponseObject> getUserDetails(
+    public ResponseEntity<UserResponse> getUserDetails(
             @RequestHeader("Authorization") String authorizationHeader
-    ) throws Exception {
-        String extractedToken = authorizationHeader.substring(7); // Loại bỏ "Bearer " từ chuỗi token
-        User user = userService.getUserDetailsFromToken(extractedToken);
-        return ResponseEntity.ok().body(
-                ResponseObject.builder()
-                        .message("Get user's detail successfully")
-                        .data(UserResponse.fromUser(user))
-                        .status(HttpStatus.OK)
-                        .build()
-        );
+    ) {
+        try {
+            String extractedToken = authorizationHeader.substring(7); // Loại bỏ "Bearer " từ chuỗi token
+            User user = userService.getUserDetailsFromToken(extractedToken);
+            return ResponseEntity.ok(UserResponse.fromUser(user));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
     @PutMapping("/details/{userId}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") })
-    public ResponseEntity<ResponseObject> updateUserDetails(
+    public ResponseEntity<UserResponse> updateUserDetails(
             @PathVariable Integer userId,
             @RequestBody UpdateUserDTO updatedUserDTO,
             @RequestHeader("Authorization") String authorizationHeader
-    ) throws Exception{
-        String extractedToken = authorizationHeader.substring(7);
-        User user = userService.getUserDetailsFromToken(extractedToken);
-        // Ensure that the user making the request matches the user being updated
-        if (user.getId() != userId) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    ) {
+        try {
+            String extractedToken = authorizationHeader.substring(7);
+            User user = userService.getUserDetailsFromToken(extractedToken);
+            // Ensure that the user making the request matches the user being updated
+            if (user.getId() != userId) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+            User updatedUser = userService.updateUser(userId, updatedUserDTO);
+            return ResponseEntity.ok(UserResponse.fromUser(updatedUser));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
-        User updatedUser = userService.updateUser(userId, updatedUserDTO);
-        return ResponseEntity.ok().body(
-                ResponseObject.builder()
-                        .message("Update user detail successfully")
-                        .data(UserResponse.fromUser(updatedUser))
-                        .status(HttpStatus.OK)
-                        .build()
-        );
     }
 
     @PutMapping("/reset-password/{userId}")

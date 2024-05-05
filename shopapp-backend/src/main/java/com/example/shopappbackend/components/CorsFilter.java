@@ -7,12 +7,21 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter extends org.springframework.web.filter.CorsFilter {
+
+    /**
+     * Constructor accepting a {@link CorsConfigurationSource} used by the filter
+     * to find the {@link CorsConfiguration} to use for each incoming request.
+     *
+     * @param configSource
+     * @see UrlBasedCorsConfigurationSource
+     */
     public CorsFilter(CorsConfigurationSource configSource) {
         super(configSource);
     }
