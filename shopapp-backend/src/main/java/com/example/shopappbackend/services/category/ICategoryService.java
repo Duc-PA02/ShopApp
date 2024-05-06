@@ -1,4 +1,4 @@
-package com.example.shopappbackend.services;
+package com.example.shopappbackend.services.category;
 
 import com.example.shopappbackend.dtos.CategoryDTO;
 import com.example.shopappbackend.models.Category;

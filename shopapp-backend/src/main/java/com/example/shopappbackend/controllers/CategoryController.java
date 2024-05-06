@@ -3,7 +3,7 @@ package com.example.shopappbackend.controllers;
 import com.example.shopappbackend.dtos.CategoryDTO;
 import com.example.shopappbackend.models.Category;
 import com.example.shopappbackend.responses.Category.UpdateCategoryResponse;
-import com.example.shopappbackend.services.ICategoryService;
+import com.example.shopappbackend.services.category.ICategoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

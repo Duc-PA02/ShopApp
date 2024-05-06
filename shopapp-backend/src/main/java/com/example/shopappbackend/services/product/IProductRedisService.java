@@ -1,4 +1,4 @@
-package com.example.shopappbackend.services;
+package com.example.shopappbackend.services.product;
 
 import com.example.shopappbackend.responses.product.ProductResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;

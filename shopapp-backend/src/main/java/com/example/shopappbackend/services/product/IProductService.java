@@ -1,4 +1,4 @@
-package com.example.shopappbackend.services;
+package com.example.shopappbackend.services.product;
 
 
 import com.example.shopappbackend.dtos.ProductDTO;

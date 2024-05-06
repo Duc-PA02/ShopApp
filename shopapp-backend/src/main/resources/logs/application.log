@@ -92,7 +92,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.example.shopappbackend.services.ProductRedisService required a bean of type 'org.springframework.data.redis.core.RedisTemplate' that could not be found.
+Parameter 0 of constructor in com.example.shopappbackend.services.product.ProductRedisService required a bean of type 'org.springframework.data.redis.core.RedisTemplate' that could not be found.
 
 
 Action:
@@ -534,7 +534,7 @@ Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'sp
 2024-04-14 17:32:41.991 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
 2024-04-14 17:32:42.244 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@cb318ac
 2024-04-14 17:32:42.245 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2024-04-14 17:32:42.592 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.example.shopappbackend.models.ProductListener': Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.example.shopappbackend.services.IProductRedisService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2024-04-14 17:32:42.592 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.example.shopappbackend.models.ProductListener': Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.example.shopappbackend.services.product.IProductRedisService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 2024-04-14 17:32:42.593 [main] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtTokenFilter' defined in file [D:\CodeWepJava\ShopApp\shopapp-backend\target\classes\com\example\shopappbackend\filters\JwtTokenFilter.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'securityConfig' defined in file [D:\CodeWepJava\ShopApp\shopapp-backend\target\classes\com\example\shopappbackend\configurations\SecurityConfig.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in com.example.shopappbackend.repositories.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
 2024-04-14 17:32:42.617 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
 2024-04-14 17:32:42.619 [main] WARN  o.a.c.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
@@ -608,12 +608,12 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.example.shopappbackend.models.ProductListener required a bean of type 'com.example.shopappbackend.services.IProductRedisService' that could not be found.
+Parameter 0 of constructor in com.example.shopappbackend.models.ProductListener required a bean of type 'com.example.shopappbackend.services.product.IProductRedisService' that could not be found.
 
 
 Action:
 
-Consider defining a bean of type 'com.example.shopappbackend.services.IProductRedisService' in your configuration.
+Consider defining a bean of type 'com.example.shopappbackend.services.product.IProductRedisService' in your configuration.
 
 2024-04-14 17:33:28.257 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
 2024-04-14 17:33:28.286 [main] INFO  c.e.s.ShopappBackendApplication - Starting ShopappBackendApplication using Java 17.0.7 with PID 4732 (D:\CodeWepJava\ShopApp\shopapp-backend\target\classes started by ducpr in D:\CodeWepJava\ShopApp\shopapp-backend)
@@ -648,7 +648,7 @@ Consider defining a bean of type 'com.example.shopappbackend.services.IProductRe
 2024-04-14 17:33:30.860 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 2024-04-14 17:33:31.101 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2024-04-14 17:33:31.174 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-04-14 17:33:31.557 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'productController' defined in file [D:\CodeWepJava\ShopApp\shopapp-backend\target\classes\com\example\shopappbackend\controllers\ProductController.class]: Unsatisfied dependency expressed through constructor parameter 2: No qualifying bean of type 'com.example.shopappbackend.services.IProductRedisService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2024-04-14 17:33:31.557 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'productController' defined in file [D:\CodeWepJava\ShopApp\shopapp-backend\target\classes\com\example\shopappbackend\controllers\ProductController.class]: Unsatisfied dependency expressed through constructor parameter 2: No qualifying bean of type 'com.example.shopappbackend.services.product.IProductRedisService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 2024-04-14 17:33:31.557 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-04-14 17:33:31.558 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2024-04-14 17:33:31.564 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
@@ -664,12 +664,12 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 2 of constructor in com.example.shopappbackend.controllers.ProductController required a bean of type 'com.example.shopappbackend.services.IProductRedisService' that could not be found.
+Parameter 2 of constructor in com.example.shopappbackend.controllers.ProductController required a bean of type 'com.example.shopappbackend.services.product.IProductRedisService' that could not be found.
 
 
 Action:
 
-Consider defining a bean of type 'com.example.shopappbackend.services.IProductRedisService' in your configuration.
+Consider defining a bean of type 'com.example.shopappbackend.services.product.IProductRedisService' in your configuration.
 
 2024-04-14 17:35:19.257 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
 2024-04-14 17:35:19.288 [main] INFO  c.e.s.ShopappBackendApplication - Starting ShopappBackendApplication using Java 17.0.7 with PID 9148 (D:\CodeWepJava\ShopApp\shopapp-backend\target\classes started by ducpr in D:\CodeWepJava\ShopApp\shopapp-backend)
@@ -15042,3 +15042,633 @@ Security filter chain: no match
 2024-05-05 23:21:25.587 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-05-05 23:21:25.713 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2024-05-05 23:21:25.728 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-05-06 22:54:15.224 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-06 22:54:15.274 [main] INFO  c.e.s.ShopappBackendApplication - Starting ShopappBackendApplication using Java 17.0.7 with PID 19256 (D:\CodeWepJava\ShopApp\shopapp-backend\target\classes started by ducpr in D:\CodeWepJava\ShopApp\shopapp-backend)
+2024-05-06 22:54:15.275 [main] INFO  c.e.s.ShopappBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2024-05-06 22:54:16.477 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-06 22:54:16.478 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-06 22:54:16.666 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 179 ms. Found 9 JPA repository interfaces.
+2024-05-06 22:54:16.678 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-06 22:54:16.681 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-06 22:54:16.695 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.CategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.695 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.CommentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.696 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.OrderDetailRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.696 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.696 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.ProductImageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.697 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.698 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.698 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.TokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.698 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 22:54:16.698 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2024-05-06 22:54:17.433 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-05-06 22:54:17.441 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-06 22:54:17.443 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-05-06 22:54:17.443 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-05-06 22:54:17.510 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-05-06 22:54:17.510 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2185 ms
+2024-05-06 22:54:17.641 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-05-06 22:54:17.764 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-06 22:54:17.825 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-06 22:54:17.864 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-05-06 22:54:18.112 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-06 22:54:18.146 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-05-06 22:54:18.508 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3f5ac587
+2024-05-06 22:54:18.511 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-05-06 22:54:18.994 [main] INFO  c.e.s.configurations.RedisConfig - redisHost = localhost, redisPort = 6379
+2024-05-06 22:54:20.050 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-06 22:54:20.053 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-06 22:54:20.366 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-05-06 22:54:20.810 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-06 22:54:22.108 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure Or [Mvc [pattern='EndpointRequestMatcher includes=[*], excludes=[], includeLinks=true']] with [org.springframework.security.web.session.DisableEncodeUrlFilter@5e02753c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7b6cb223, org.springframework.security.web.context.SecurityContextHolderFilter@57d827e6, org.springframework.security.web.header.HeaderWriterFilter@6c26a27e, com.example.shopappbackend.components.CorsFilter@2b8106fa, org.springframework.security.web.authentication.logout.LogoutFilter@4710332d, com.example.shopappbackend.filters.JwtTokenFilter@38bf7a37, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b73b5c9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1a8b2ab3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5b64bc02, org.springframework.security.web.access.ExceptionTranslationFilter@278758da, org.springframework.security.web.access.intercept.AuthorizationFilter@5c486c5a]
+2024-05-06 22:54:22.121 [main] WARN  o.s.s.c.a.web.builders.WebSecurity - 
+
+********************************************************************
+**********        Security debugging is enabled.       *************
+**********    This may include sensitive information.  *************
+**********      Do not use in a production system!     *************
+********************************************************************
+
+
+2024-05-06 22:54:22.807 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-05-06 22:54:22.835 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-05-06 22:54:22.851 [main] INFO  c.e.s.ShopappBackendApplication - Started ShopappBackendApplication in 7.956 seconds (process running for 8.739)
+2024-05-06 22:54:57.335 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-06 22:54:57.335 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-05-06 22:54:57.337 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-05-06 22:54:57.355 [http-nio-8080-exec-2] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/users/login':
+
+org.apache.catalina.connector.RequestFacade@251016b3
+
+servletPath:/api/v1/users/login
+pathInfo:null
+headers: 
+accept-language: vi
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJFbWFpbCI6ImR1Y3BhMjAwMkBnbWFpbC5jb20iLCJzdWIiOiJkdWNwYTIwMDJAZ21haWwuY29tIiwiZXhwIjoxNzEwODYyMjIzfQ.6qu0VJd1_1Cn6zc5lHilj29RhnIkBb9xg0HUcpO02Js
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 03e3bf68-d53e-42b2-b4bd-876c016a374f
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 80
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 22:57:31.244 [http-nio-8080-exec-5] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/users/login':
+
+org.apache.catalina.connector.RequestFacade@6d5e7f89
+
+servletPath:/api/v1/users/login
+pathInfo:null
+headers: 
+accept-language: vi
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5ODc2NTQzMjEiLCJ1c2VySWQiOjgsInN1YiI6IjA5ODc2NTQzMjEiLCJleHAiOjE3MTUwOTcyOTd9.GZ822LOUU0Dw7etwPrUBWOBsNzbvi1yJVFfNJF_8Qvo
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 5cf13614-98bf-4b26-a76b-7e6d3680e6b8
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 72
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 22:57:31.262 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.example.shopappbackend.responses.User.LoginResponse> com.example.shopappbackend.controllers.UserController.login(com.example.shopappbackend.dtos.UserLoginDTO,jakarta.servlet.http.HttpServletRequest) with 2 errors: [Field error in object 'userLoginDTO' on field 'password': rejected value [null]; codes [NotBlank.userLoginDTO.password,NotBlank.password,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [userLoginDTO.password,password]; arguments []; default message [password]]; default message [Password cannot be blank]] [Field error in object 'userLoginDTO' on field 'phoneNumber': rejected value [null]; codes [NotBlank.userLoginDTO.phoneNumber,NotBlank.phoneNumber,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [userLoginDTO.phoneNumber,phoneNumber]; arguments []; default message [phoneNumber]]; default message [Phone number is required]] ]
+2024-05-06 22:57:31.268 [http-nio-8080-exec-5] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/error':
+
+org.apache.catalina.core.ApplicationHttpRequest@5a5dbd8b
+
+servletPath:/error
+pathInfo:null
+headers: 
+accept-language: vi
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5ODc2NTQzMjEiLCJ1c2VySWQiOjgsInN1YiI6IjA5ODc2NTQzMjEiLCJleHAiOjE3MTUwOTcyOTd9.GZ822LOUU0Dw7etwPrUBWOBsNzbvi1yJVFfNJF_8Qvo
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 5cf13614-98bf-4b26-a76b-7e6d3680e6b8
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 72
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 22:58:07.919 [http-nio-8080-exec-6] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/users/login':
+
+org.apache.catalina.connector.RequestFacade@412cf0ac
+
+servletPath:/api/v1/users/login
+pathInfo:null
+headers: 
+accept-language: vi
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5ODc2NTQzMjEiLCJ1c2VySWQiOjgsInN1YiI6IjA5ODc2NTQzMjEiLCJleHAiOjE3MTUwOTcyOTd9.GZ822LOUU0Dw7etwPrUBWOBsNzbvi1yJVFfNJF_8Qvo
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 035ff878-7066-4a9b-9893-d9fa9ed65d8a
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 71
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 22:58:07.920 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.example.shopappbackend.responses.User.LoginResponse> com.example.shopappbackend.controllers.UserController.login(com.example.shopappbackend.dtos.UserLoginDTO,jakarta.servlet.http.HttpServletRequest) with 2 errors: [Field error in object 'userLoginDTO' on field 'phoneNumber': rejected value [null]; codes [NotBlank.userLoginDTO.phoneNumber,NotBlank.phoneNumber,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [userLoginDTO.phoneNumber,phoneNumber]; arguments []; default message [phoneNumber]]; default message [Phone number is required]] [Field error in object 'userLoginDTO' on field 'password': rejected value [null]; codes [NotBlank.userLoginDTO.password,NotBlank.password,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [userLoginDTO.password,password]; arguments []; default message [password]]; default message [Password cannot be blank]] ]
+2024-05-06 22:58:07.921 [http-nio-8080-exec-6] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/error':
+
+org.apache.catalina.core.ApplicationHttpRequest@11fa97
+
+servletPath:/error
+pathInfo:null
+headers: 
+accept-language: vi
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5ODc2NTQzMjEiLCJ1c2VySWQiOjgsInN1YiI6IjA5ODc2NTQzMjEiLCJleHAiOjE3MTUwOTcyOTd9.GZ822LOUU0Dw7etwPrUBWOBsNzbvi1yJVFfNJF_8Qvo
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 035ff878-7066-4a9b-9893-d9fa9ed65d8a
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 71
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:01:39.292 [http-nio-8080-exec-9] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/users/login':
+
+org.apache.catalina.connector.RequestFacade@4fd1daf9
+
+servletPath:/api/v1/users/login
+pathInfo:null
+headers: 
+accept-language: vi
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJFbWFpbCI6ImR1Y3BhMjAwMkBnbWFpbC5jb20iLCJzdWIiOiJkdWNwYTIwMDJAZ21haWwuY29tIiwiZXhwIjoxNzEwODYyMjIzfQ.6qu0VJd1_1Cn6zc5lHilj29RhnIkBb9xg0HUcpO02Js
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 9625348e-e502-4abc-8490-5b743fdef58d
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 80
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:01:52.608 [http-nio-8080-exec-10] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/users/comments':
+
+org.apache.catalina.connector.RequestFacade@681b5402
+
+servletPath:/api/v1/users/comments
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA4NjU1MDU5MTgiLCJ1c2VySWQiOjcsInN1YiI6IjA4NjU1MDU5MTgiLCJleHAiOjE3MTUwOTc2OTl9.l7dizk9qLHlI8iPa5w2caAGnzCPSzYDj2R_h3JngVr8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 77a48a5d-282e-4510-8c82-c1bbbb7f73dc
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 69
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:01:52.647 [http-nio-8080-exec-10] WARN  o.s.web.servlet.PageNotFound - No mapping for POST /api/v1/users/comments
+2024-05-06 23:01:52.647 [http-nio-8080-exec-10] WARN  o.s.web.servlet.PageNotFound - No endpoint POST /api/v1/users/comments.
+2024-05-06 23:01:52.648 [http-nio-8080-exec-10] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/error':
+
+org.apache.catalina.core.ApplicationHttpRequest@24d3db63
+
+servletPath:/error
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA4NjU1MDU5MTgiLCJ1c2VySWQiOjcsInN1YiI6IjA4NjU1MDU5MTgiLCJleHAiOjE3MTUwOTc2OTl9.l7dizk9qLHlI8iPa5w2caAGnzCPSzYDj2R_h3JngVr8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 77a48a5d-282e-4510-8c82-c1bbbb7f73dc
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 69
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:02:00.049 [http-nio-8080-exec-1] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/users/comments':
+
+org.apache.catalina.connector.RequestFacade@d83ffc1
+
+servletPath:/api/v1/users/comments
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA4NjU1MDU5MTgiLCJ1c2VySWQiOjcsInN1YiI6IjA4NjU1MDU5MTgiLCJleHAiOjE3MTUwOTc2OTl9.l7dizk9qLHlI8iPa5w2caAGnzCPSzYDj2R_h3JngVr8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 4843cc95-2b04-4fe6-8463-a99cd6e25843
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 69
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:02:00.065 [http-nio-8080-exec-1] WARN  o.s.web.servlet.PageNotFound - No mapping for POST /api/v1/users/comments
+2024-05-06 23:02:00.065 [http-nio-8080-exec-1] WARN  o.s.web.servlet.PageNotFound - No endpoint POST /api/v1/users/comments.
+2024-05-06 23:02:00.066 [http-nio-8080-exec-1] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/error':
+
+org.apache.catalina.core.ApplicationHttpRequest@1c47e48
+
+servletPath:/error
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA4NjU1MDU5MTgiLCJ1c2VySWQiOjcsInN1YiI6IjA4NjU1MDU5MTgiLCJleHAiOjE3MTUwOTc2OTl9.l7dizk9qLHlI8iPa5w2caAGnzCPSzYDj2R_h3JngVr8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 4843cc95-2b04-4fe6-8463-a99cd6e25843
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 69
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:02:14.118 [http-nio-8080-exec-2] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/comments':
+
+org.apache.catalina.connector.RequestFacade@2913c9a0
+
+servletPath:/api/v1/comments
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA4NjU1MDU5MTgiLCJ1c2VySWQiOjcsInN1YiI6IjA4NjU1MDU5MTgiLCJleHAiOjE3MTUwOTc2OTl9.l7dizk9qLHlI8iPa5w2caAGnzCPSzYDj2R_h3JngVr8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 23ba5b89-f06b-4c64-81a4-3fee7447e6ac
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 69
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:02:25.774 [http-nio-8080-exec-4] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/comments':
+
+org.apache.catalina.connector.RequestFacade@52b71d4
+
+servletPath:/api/v1/comments
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA4NjU1MDU5MTgiLCJ1c2VySWQiOjcsInN1YiI6IjA4NjU1MDU5MTgiLCJleHAiOjE3MTUwOTc2OTl9.l7dizk9qLHlI8iPa5w2caAGnzCPSzYDj2R_h3JngVr8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 18cef902-cc57-47ea-9f22-50f9d027e7e5
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 69
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:02:59.679 [http-nio-8080-exec-7] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/comments':
+
+org.apache.catalina.connector.RequestFacade@660be257
+
+servletPath:/api/v1/comments
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA4NjU1MDU5MTgiLCJ1c2VySWQiOjcsInN1YiI6IjA4NjU1MDU5MTgiLCJleHAiOjE3MTUwOTc2OTl9.l7dizk9qLHlI8iPa5w2caAGnzCPSzYDj2R_h3JngVr8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: facfa924-c025-43be-a907-a80237411e70
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 69
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:03:03.856 [http-nio-8080-exec-6] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/users/login':
+
+org.apache.catalina.connector.RequestFacade@17d437bb
+
+servletPath:/api/v1/users/login
+pathInfo:null
+headers: 
+accept-language: vi
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJFbWFpbCI6ImR1Y3BhMjAwMkBnbWFpbC5jb20iLCJzdWIiOiJkdWNwYTIwMDJAZ21haWwuY29tIiwiZXhwIjoxNzEwODYyMjIzfQ.6qu0VJd1_1Cn6zc5lHilj29RhnIkBb9xg0HUcpO02Js
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 4002b810-457c-44c0-a42a-4763bbb97291
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 80
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:03:11.077 [http-nio-8080-exec-9] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/users/login':
+
+org.apache.catalina.connector.RequestFacade@648af3e5
+
+servletPath:/api/v1/users/login
+pathInfo:null
+headers: 
+accept-language: vi
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJFbWFpbCI6ImR1Y3BhMjAwMkBnbWFpbC5jb20iLCJzdWIiOiJkdWNwYTIwMDJAZ21haWwuY29tIiwiZXhwIjoxNzEwODYyMjIzfQ.6qu0VJd1_1Cn6zc5lHilj29RhnIkBb9xg0HUcpO02Js
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 36b7b24e-5999-47d5-840f-94a38ef55d1e
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 80
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:03:30.483 [http-nio-8080-exec-10] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/comments':
+
+org.apache.catalina.connector.RequestFacade@4c02d549
+
+servletPath:/api/v1/comments
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5ODc2NTQzMjEiLCJ1c2VySWQiOjgsInN1YiI6IjA5ODc2NTQzMjEiLCJleHAiOjE3MTUwOTc3OTF9.tbeX3TeJ6BhKj7-uYKGRvQhz3j7daXDuf8OgShisMG8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: bef03c16-532d-46c1-9f06-24fef599fbac
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 73
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:03:33.653 [http-nio-8080-exec-2] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/comments':
+
+org.apache.catalina.connector.RequestFacade@2b04d697
+
+servletPath:/api/v1/comments
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5ODc2NTQzMjEiLCJ1c2VySWQiOjgsInN1YiI6IjA5ODc2NTQzMjEiLCJleHAiOjE3MTUwOTc3OTF9.tbeX3TeJ6BhKj7-uYKGRvQhz3j7daXDuf8OgShisMG8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 0d6a5039-180e-4302-9410-9bb6bcbaa1d5
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 73
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:08:30.774 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-06 23:08:30.902 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-05-06 23:08:30.927 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-05-06 23:08:35.096 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-06 23:08:35.136 [main] INFO  c.e.s.ShopappBackendApplication - Starting ShopappBackendApplication using Java 17.0.7 with PID 6532 (D:\CodeWepJava\ShopApp\shopapp-backend\target\classes started by ducpr in D:\CodeWepJava\ShopApp\shopapp-backend)
+2024-05-06 23:08:35.137 [main] INFO  c.e.s.ShopappBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2024-05-06 23:08:35.916 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-06 23:08:35.917 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-06 23:08:36.052 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 128 ms. Found 9 JPA repository interfaces.
+2024-05-06 23:08:36.062 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-06 23:08:36.063 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-06 23:08:36.078 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.CategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.079 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.CommentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.079 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.OrderDetailRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.079 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.080 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.ProductImageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.081 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.081 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.081 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.TokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.081 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.shopappbackend.repositories.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-05-06 23:08:36.081 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2024-05-06 23:08:36.636 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-05-06 23:08:36.644 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-06 23:08:36.645 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-05-06 23:08:36.646 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-05-06 23:08:36.695 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-05-06 23:08:36.695 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1526 ms
+2024-05-06 23:08:36.798 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-05-06 23:08:36.885 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-06 23:08:36.944 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-06 23:08:36.979 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-05-06 23:08:37.153 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-06 23:08:37.171 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-05-06 23:08:37.383 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5b32e0b1
+2024-05-06 23:08:37.384 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-05-06 23:08:37.751 [main] INFO  c.e.s.configurations.RedisConfig - redisHost = localhost, redisPort = 6379
+2024-05-06 23:08:38.555 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-06 23:08:38.557 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-06 23:08:38.770 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-05-06 23:08:39.022 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-06 23:08:39.779 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure Or [Mvc [pattern='EndpointRequestMatcher includes=[*], excludes=[], includeLinks=true']] with [org.springframework.security.web.session.DisableEncodeUrlFilter@243dc57b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7c9a3be, org.springframework.security.web.context.SecurityContextHolderFilter@3131c0d8, org.springframework.security.web.header.HeaderWriterFilter@4b5d2a4c, com.example.shopappbackend.components.CorsFilter@4306709f, org.springframework.security.web.authentication.logout.LogoutFilter@7a792f64, com.example.shopappbackend.filters.JwtTokenFilter@2540ad71, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@261a0d86, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@368a8b70, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@12ce5274, org.springframework.security.web.access.ExceptionTranslationFilter@4a9e03b, org.springframework.security.web.access.intercept.AuthorizationFilter@44b3d336]
+2024-05-06 23:08:39.788 [main] WARN  o.s.s.c.a.web.builders.WebSecurity - 
+
+********************************************************************
+**********        Security debugging is enabled.       *************
+**********    This may include sensitive information.  *************
+**********      Do not use in a production system!     *************
+********************************************************************
+
+
+2024-05-06 23:08:40.207 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-05-06 23:08:40.221 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-05-06 23:08:40.234 [main] INFO  c.e.s.ShopappBackendApplication - Started ShopappBackendApplication in 5.374 seconds (process running for 6.017)
+2024-05-06 23:08:41.660 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-06 23:08:41.660 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-05-06 23:08:41.661 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-05-06 23:08:41.679 [http-nio-8080-exec-2] INFO  Spring Security Debugger - 
+
+************************************************************
+
+Request received for POST '/api/v1/comments':
+
+org.apache.catalina.connector.RequestFacade@4a3d9f8f
+
+servletPath:/api/v1/comments
+pathInfo:null
+headers: 
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5ODc2NTQzMjEiLCJ1c2VySWQiOjgsInN1YiI6IjA5ODc2NTQzMjEiLCJleHAiOjE3MTUwOTc3OTF9.tbeX3TeJ6BhKj7-uYKGRvQhz3j7daXDuf8OgShisMG8
+user-agent: PostmanRuntime/7.38.0
+accept: */*
+postman-token: 546f24ca-421b-4227-89a6-c554d2655fb5
+host: localhost:8080
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+content-length: 77
+
+
+Security filter chain: no match
+
+
+************************************************************
+
+
+2024-05-06 23:09:31.828 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-06 23:09:31.945 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-05-06 23:09:31.950 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

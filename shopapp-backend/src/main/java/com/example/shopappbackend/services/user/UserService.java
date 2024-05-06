@@ -65,6 +65,7 @@ public class UserService implements IUserService {
                 .build();
 
         newUser.setRole(role);
+        //Nếu không có facebook hoặc google thì encode password
         if (userDTO.getFacebookAccountId() == 0 && userDTO.getGoogleAccountId() == 0){
             String password = userDTO.getPassword();
             String encodedPassword = passwordEncoder.encode(password);

@@ -8,8 +8,8 @@ import com.example.shopappbackend.models.Product;
 import com.example.shopappbackend.models.ProductImage;
 import com.example.shopappbackend.responses.product.ProductListResponse;
 import com.example.shopappbackend.responses.product.ProductResponse;
-import com.example.shopappbackend.services.IProductRedisService;
-import com.example.shopappbackend.services.IProductService;
+import com.example.shopappbackend.services.product.IProductRedisService;
+import com.example.shopappbackend.services.product.IProductService;
 import com.example.shopappbackend.utils.MessageKeys;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.javafaker.Faker;
@@ -80,12 +80,14 @@ public class ProductController {
                 //Kiểm tra kích thước và định dạng file
                 if (file.getSize() > 10*1024*1024){ //kích thước > 10MB
                     return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
-                            .body(localizationUtils.getLocalizedMessage(MessageKeys.UPLOAD_IMAGES_FILE_LARGE));
+                            .body(localizationUtils
+                                    .getLocalizedMessage(MessageKeys.UPLOAD_IMAGES_FILE_LARGE));
                 }
                 String contentFile = file.getContentType();
                 if (contentFile == null || !contentFile.startsWith("image/")){
                     return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-                            .body(localizationUtils.getLocalizedMessage(MessageKeys.UPLOAD_IMAGES_FILE_MUST_BE_IMAGE));
+                            .body(localizationUtils
+                                    .getLocalizedMessage(MessageKeys.UPLOAD_IMAGES_FILE_MUST_BE_IMAGE));
                 }
                 // Lưu file và cập nhật thumbnail trong DTO
                 String fileName = storeFile(file);

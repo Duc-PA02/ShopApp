@@ -1,4 +1,4 @@
-package com.example.shopappbackend.services;
+package com.example.shopappbackend.services.orderdetais;
 
 import com.example.shopappbackend.dtos.OrderDetailDTO;
 import com.example.shopappbackend.models.OrderDetail;

@@ -1,6 +1,6 @@
 package com.example.shopappbackend.models;
 
-import com.example.shopappbackend.services.IProductRedisService;
+import com.example.shopappbackend.services.product.IProductRedisService;
 import jakarta.persistence.*;
 import lombok.*;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.example.shopappbackend.services;
+package com.example.shopappbackend.services.role;
 
 import com.example.shopappbackend.models.Role;
 
